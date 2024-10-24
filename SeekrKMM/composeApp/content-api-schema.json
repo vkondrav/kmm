@@ -1,0 +1,3317 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "SeekR Content API",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "/wp-json/ang/v1"
+        }
+    ],
+    "paths": {
+        "/audio_highlights": {
+            "get": {
+                "summary": "Get multiple audio highlights.",
+                "operationId": "getAudioHighlights",
+                "parameters": [
+                    {
+                        "name": "radio_show",
+                        "in": "query",
+                        "description": "Id or Slug of Radio Show to get objects from.",
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    {
+                        "name": "genre",
+                        "in": "query",
+                        "description": "Id or Slug of a Genre to get objects from.",
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    {
+                        "name": "radio_station",
+                        "in": "query",
+                        "description": "Id or Slug of a Radio Station to get objects from.",
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    {
+                        "name": "paged",
+                        "in": "query",
+                        "description": "For pagination, get objects from that specific page.",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "Number of objects per page.",
+                        "schema": {
+                            "type": "integer",
+                            "default": 10,
+                            "maximum": 30,
+                            "minimum": -1
+                        }
+                    },
+                    {
+                        "name": "no_restriction",
+                        "in": "query",
+                        "description": "Removes the 36 hours restriction. Can be set to any string value, including empty, to pass true.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": "DESC",
+                            "enum": [
+                                "ASC",
+                                "DESC"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of audio highlights.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Audio_Highlight"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request error.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Api_Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/audio_highlights/latest": {
+            "get": {
+                "summary": "Get multiple audio highlights.",
+                "operationId": "getLatestAudioHighlights",
+                "parameters": [
+                    {
+                        "name": "genre",
+                        "in": "query",
+                        "description": "Id or Slug of a Genre to get objects from.",
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": "DESC",
+                            "enum": [
+                                "ASC",
+                                "DESC"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of audio highlights.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Audio_Highlight"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/audio_highlights/latest/{radio_show_id}": {
+            "get": {
+                "summary": "Get the sinlge latest audio highlight from a show.",
+                "operationId": "getSingleLatestAudioHighlight",
+                "parameters": [
+                    {
+                        "name": "radio_show_id",
+                        "in": "path",
+                        "description": "Id or Slug of Radio Show to get the latest Highlight from.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of audio highlights.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Audio_Highlight"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/config/{platform}": {
+            "get": {
+                "summary": "Get multiple contests.",
+                "operationId": "getConfigs",
+                "parameters": [
+                    {
+                        "name": "platform",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "android",
+                                "ios"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The configs for the requested platform.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Config"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/contests": {
+            "get": {
+                "summary": "Get multiple contests.",
+                "operationId": "getContests",
+                "parameters": [
+                    {
+                        "name": "genre",
+                        "in": "query",
+                        "description": "Id or Slug of a Top Level Genre.",
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    {
+                        "name": "radio_station",
+                        "in": "query",
+                        "description": "Id or Slug of a Radio Station.",
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    {
+                        "name": "location",
+                        "in": "query",
+                        "description": "Id or Slug of a Location.",
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    {
+                        "name": "paged",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": -1,
+                            "minimum": -1
+                        }
+                    },
+                    {
+                        "name": "orderby",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": "sort_order",
+                            "enum": [
+                                "date_published",
+                                "date_modified",
+                                "slug",
+                                "post_id",
+                                "sort_order"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": "ASC",
+                            "enum": [
+                                "ASC",
+                                "DESC"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of radio contests.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Contest"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/genres": {
+            "get": {
+                "summary": "Get multiple genres.",
+                "operationId": "getGenres",
+                "parameters": [
+                    {
+                        "name": "parent",
+                        "in": "query",
+                        "description": "Parent can be either a slug or a Genre id",
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    {
+                        "name": "paged",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 0,
+                            "minimum": 0
+                        }
+                    },
+                    {
+                        "name": "orderby",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": "sort_order",
+                            "enum": [
+                                "id",
+                                "term_name",
+                                "sort_order"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": "ASC",
+                            "enum": [
+                                "ASC",
+                                "DESC"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of genres.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Genre"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/genres/{id}": {
+            "get": {
+                "summary": "Get a single genre by id or slug.",
+                "operationId": "getGenre",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id or Slug of requested Genre",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A Genre object or a WP_Error in case of failure.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Genre"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/locations": {
+            "get": {
+                "summary": "Get multiple locations.",
+                "operationId": "getLocations",
+                "parameters": [
+                    {
+                        "name": "orderby",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": "sort_order",
+                            "enum": [
+                                "id",
+                                "term_name",
+                                "sort_order"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": "ASC",
+                            "enum": [
+                                "ASC",
+                                "DESC"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of locations.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Location"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/menus/{slug}": {
+            "get": {
+                "summary": "Gets all the menus informations. Also provides routes information if called outside of the REST context.",
+                "operationId": "getMenu",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Menu Location Slug.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of locations.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Menu_Item"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/on_air/{call_letters}": {
+            "get": {
+                "summary": "Get the full week schedule.",
+                "operationId": "getStationOnAir",
+                "parameters": [
+                    {
+                        "name": "call_letters",
+                        "in": "path",
+                        "description": "Call letters of a radio station.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of Schedule Item.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/On_Air"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/pages/{id}": {
+            "get": {
+                "summary": "Get a single Page. Id will search by slug by default, if id is a numerical string, it will search by id.",
+                "operationId": "getPage",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id can be a slug or a page id.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "content_format",
+                        "in": "query",
+                        "description": "Format post_content as html content or as parsed data blocks.",
+                        "schema": {
+                            "type": "string",
+                            "default": "blocks",
+                            "enum": [
+                                "html",
+                                "blocks"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single Page",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Page"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "A Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Api_Error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "The Page is not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Api_Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/playlist-items/{playlist_id}": {
+            "get": {
+                "summary": "Get a playlist items. It will search by slug by default, if id is a numerical string, it will search by id.",
+                "operationId": "getPlaylistItems",
+                "parameters": [
+                    {
+                        "name": "playlist_id",
+                        "in": "path",
+                        "description": "id can be a slug or a playlist id.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of playlist items.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Playlist_Item"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "The Playlist is not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Api_Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/playlists": {
+            "get": {
+                "summary": "Get multiple playlists.",
+                "operationId": "getPlaylists",
+                "parameters": [
+                    {
+                        "name": "paged",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": -1,
+                            "minimum": -1
+                        }
+                    },
+                    {
+                        "name": "orderby",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": "sort_order",
+                            "enum": [
+                                "date_published",
+                                "date_modified",
+                                "slug",
+                                "post_id",
+                                "sort_order"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": "ASC",
+                            "enum": [
+                                "ASC",
+                                "DESC"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of playlists.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Playlist"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/playlists/{id}": {
+            "get": {
+                "summary": "Get a single playlist. Id will search by slug by default, if id is a numerical string, it will search by id.",
+                "operationId": "getPlaylist",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id can be a slug or a playlist id.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single Playlist",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Playlist"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "A Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Api_Error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "The Playlist is not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Api_Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/podcast_episodes": {
+            "get": {
+                "summary": "Get multiple podcast episodes.",
+                "operationId": "getPodcastEpisodes",
+                "parameters": [
+                    {
+                        "name": "podcast_id",
+                        "in": "query",
+                        "description": "Id or Slug of Podcast to get objects from.",
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    {
+                        "name": "paged",
+                        "in": "query",
+                        "description": "For pagination, get objects from that specific page.",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "Number of objects per page.",
+                        "schema": {
+                            "type": "integer",
+                            "default": 10,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": "DESC",
+                            "enum": [
+                                "ASC",
+                                "DESC"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An object containing integers for prev_page and next_page and an array of podcast episodes.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "prev_page": {
+                                            "type": "integer",
+                                            "nullable": true
+                                        },
+                                        "next_page": {
+                                            "type": "integer",
+                                            "nullable": true
+                                        },
+                                        "episodes": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Podcast_Episode"
+                                            },
+                                            "nullable": true
+                                        },
+                                        "count": {
+                                            "type": "integer",
+                                            "nullable": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/podcast_episodes/latest": {
+            "get": {
+                "summary": "Get latest podcast episode for each podcast.",
+                "operationId": "getLatestEpisodes",
+                "parameters": [
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": "DESC",
+                            "enum": [
+                                "ASC",
+                                "DESC"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of episode.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Podcast_Episode"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/podcast_episodes/latest/{id}": {
+            "get": {
+                "summary": "Get latest podcast episode for one podcast.",
+                "operationId": "getSingleLatestEpisode",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id or Slug of Podcast to get latest episode.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A Podcats Episode object.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Podcast_Episode"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "A Podcast has no episode",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Api_Error"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "A Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Api_Error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "A Podcast is not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Api_Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/podcasts": {
+            "get": {
+                "summary": "Get multiple podcasts.",
+                "operationId": "getPodcasts",
+                "parameters": [
+                    {
+                        "name": "genre",
+                        "in": "query",
+                        "description": "Id or slug of Genre to get objects from.",
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    {
+                        "name": "orderby",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": "latest",
+                            "enum": [
+                                "id",
+                                "term_name",
+                                "latest"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": "DESC",
+                            "enum": [
+                                "ASC",
+                                "DESC"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "paged",
+                        "in": "query",
+                        "description": "For pagination, get objects from that specific page.",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "Number of objects per page. Default is 0 to get them all.",
+                        "schema": {
+                            "type": "integer",
+                            "default": 0,
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of podcasts.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Podcast"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/podcasts/{id}": {
+            "get": {
+                "summary": "Get a single Podcast. Id will search by slug by default, if id is a numerical string, it will search by id.",
+                "operationId": "getPodcast",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id can be a slug or a podcast id.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single Podcast",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Podcast"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "A Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Api_Error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "The Podcast is not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Api_Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/radio_shows": {
+            "get": {
+                "summary": "Get multiple radio shows.",
+                "operationId": "getRadioShows",
+                "parameters": [
+                    {
+                        "name": "genre",
+                        "in": "query",
+                        "description": "Id or slug of Genre to get objects from.",
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    {
+                        "name": "radio_station",
+                        "in": "query",
+                        "description": "Id or slug of Radio Station to get objects from.",
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    {
+                        "name": "orderby",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": "latest",
+                            "enum": [
+                                "id",
+                                "term_name",
+                                "sort_order",
+                                "latest"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": "ASC",
+                            "enum": [
+                                "ASC",
+                                "DESC"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "paged",
+                        "in": "query",
+                        "description": "For pagination, get objects from that specific page.",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "Number of objects per page. Default is 0 to get them all.",
+                        "schema": {
+                            "type": "integer",
+                            "default": 0,
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of radio shows.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Radio_Show"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/radio_shows/{id}": {
+            "get": {
+                "summary": "Get a single Radio Show. Id will search by slug by default, if id is a numerical string, it will search by id.",
+                "operationId": "getRadioShow",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id can be a slug or a radio station id.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single Radio Show",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Radio_Show"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "A Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Api_Error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "The Radio Station is not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Api_Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/radio_stations": {
+            "get": {
+                "summary": "Get multiple radio stations.",
+                "operationId": "getRadioStations",
+                "parameters": [
+                    {
+                        "name": "location",
+                        "in": "query",
+                        "description": "Id or Slug of Location to get objects from.",
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    {
+                        "name": "genre",
+                        "in": "query",
+                        "description": "Id or slug of Genre to get objects from.",
+                        "schema": {
+                            "type": "string",
+                            "default": ""
+                        }
+                    },
+                    {
+                        "name": "paged",
+                        "in": "query",
+                        "description": "For pagination, get objects from that specific page.",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "description": "Number of objects per page. Default is -1 to get them all.",
+                        "schema": {
+                            "type": "integer",
+                            "default": -1,
+                            "minimum": -1
+                        }
+                    },
+                    {
+                        "name": "orderby",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": "frequency",
+                            "enum": [
+                                "date_published",
+                                "date_modified",
+                                "slug",
+                                "post_id",
+                                "frequency"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": "ASC",
+                            "enum": [
+                                "ASC",
+                                "DESC"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of radio stations.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Radio_Station"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/radio_stations/{id}": {
+            "get": {
+                "summary": "Get a single Radio Station. Id will search by slug by default, if id is a numerical string, it will search by id.",
+                "operationId": "getRadioStation",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id can be a slug or a radio station id.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single Radio Station",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Radio_Station"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "A Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Api_Error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "The Radio Station is not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Api_Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/station_schedule/{radio_station}": {
+            "get": {
+                "summary": "Get the full week schedule.",
+                "operationId": "getStationSchedule",
+                "parameters": [
+                    {
+                        "name": "radio_station",
+                        "in": "path",
+                        "description": "Id or Slug of Radio Show to get objects from.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of Schedule Item.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Schedule_Item"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Api_Error": {
+                "description": "An Error object.",
+                "properties": {
+                    "code": {
+                        "description": "WordPress internal Error Code.",
+                        "type": "string"
+                    },
+                    "message": {
+                        "description": "Error message.",
+                        "type": "string"
+                    },
+                    "data": {
+                        "properties": {
+                            "code": {
+                                "description": "The HTTP Code",
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "Audio_Highlight": {
+                "description": "Audio Highlight object class.",
+                "required": [
+                    "id",
+                    "name",
+                    "slug",
+                    "date",
+                    "duration",
+                    "audio_url"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Audio Highlight internal WordPress ID.",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Audio Highlight name.",
+                        "type": "string"
+                    },
+                    "slug": {
+                        "description": "Audio Highlight slug",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Audio Highlight description",
+                        "type": "string"
+                    },
+                    "url": {
+                        "description": "Audio Highlight url",
+                        "type": "string"
+                    },
+                    "date": {
+                        "description": "Audio Highlight Published Date",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "duration": {
+                        "description": "Audio Highlight duration in seconds.",
+                        "type": "integer"
+                    },
+                    "primary_color": {
+                        "description": "Audio Highlight primary color, passed from Radio Show.",
+                        "type": "string"
+                    },
+                    "secondary_color": {
+                        "description": "Audio Highlight secondary color, passed from Radio Show.",
+                        "type": "string"
+                    },
+                    "radio_show_id": {
+                        "description": "Audio Highlight radio show id.",
+                        "type": "integer"
+                    },
+                    "radio_show_name": {
+                        "description": "Audio Highlight radio show name.",
+                        "type": "string"
+                    },
+                    "genres": {
+                        "description": "Audio Highlight genres name, passed from Radio Show.",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "radio_station_ids": {
+                        "description": "Audio Highlight radio station ids.",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    },
+                    "radio_station_names": {
+                        "description": "Audio Highlight radio stations name, passed from Radio Show.",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "image": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Image_Sizes"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Audio Highlight Image"
+                    },
+                    "audio_url": {
+                        "description": "Audio Highlight Audio Url",
+                        "type": "string"
+                    },
+                    "has_explicit_content": {
+                        "description": "Audio Highlight flag for explicit content",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "Audio_Highlights_Block": {
+                "description": "API: /getAudioHighlights",
+                "required": [
+                    "type"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "Block Title.",
+                        "type": "string"
+                    },
+                    "filters": {
+                        "properties": {
+                            "genre": {
+                                "description": "Fetch using this value in the `genre` argument",
+                                "type": "string"
+                            },
+                            "followed": {
+                                "description": "Filter by Followed Radio Shows",
+                                "type": "boolean"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "items": {
+                        "description": "Array of objects, the type of objects depends on what type of block this instance represents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Audio_Highlight"
+                        }
+                    },
+                    "highlight_pinned_station_first": {
+                        "description": "If true order any highlights for pinned station to the front",
+                        "type": "boolean"
+                    },
+                    "type": {
+                        "description": "Block Type.",
+                        "type": "string",
+                        "pattern": "^audio_highlights$"
+                    }
+                },
+                "type": "object"
+            },
+            "Block": {
+                "description": "If `items` is not empty, show objects in that array. Ignore everything else. Else apply a combination of api/device logic",
+                "properties": {
+                    "contests_block": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Contests_Block"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "A contests list block."
+                    },
+                    "live_radio_stations_block": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Live_Radio_Stations_Block"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "A live radio stations list block."
+                    },
+                    "radio_stations_block": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Radio_Stations_Block"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "A radio stations list block."
+                    },
+                    "radio_shows_block": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Radio_Shows_Block"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "A radio shows list block."
+                    },
+                    "podcast_episodes_block": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Podcast_Episodes_Block"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "A podcast episodes list block."
+                    },
+                    "podcasts_block": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Podcasts_Block"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "A podcasts list block."
+                    },
+                    "genres_block": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Genres_Block"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "A genres list block."
+                    },
+                    "audio_highlights_block": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Audio_Highlights_Block"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "An audio highlights list block."
+                    },
+                    "latest_audio_highlight_block": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Latest_Audio_Highlight_Block"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "A latest audio highlight list block."
+                    },
+                    "single_playlist_block": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Single_Playlist_Block"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Single Playlist block."
+                    }
+                },
+                "type": "object"
+            },
+            "Config": {
+                "description": "A Config object.",
+                "required": [
+                    "min_build_number",
+                    "force_update_url"
+                ],
+                "properties": {
+                    "min_build_number": {
+                        "description": "Minimum build number.",
+                        "type": "integer"
+                    },
+                    "social_media_facebook_url": {
+                        "description": "Facebook URL.",
+                        "type": "string"
+                    },
+                    "social_media_x_twitter_url": {
+                        "description": "X (formerly twitter) URL.",
+                        "type": "string"
+                    },
+                    "social_media_instagram_url": {
+                        "description": "Instagram URL.",
+                        "type": "string"
+                    },
+                    "social_media_youtube_url": {
+                        "description": "Youtube URL.",
+                        "type": "string"
+                    },
+                    "social_media_tiktok_url": {
+                        "description": "Tiktok URL.",
+                        "type": "string"
+                    },
+                    "terms_and_conditions_url": {
+                        "description": "Terms and Conditions URL.",
+                        "type": "string"
+                    },
+                    "privacy_policy_url": {
+                        "description": "Privacy Policy URL.",
+                        "type": "string"
+                    },
+                    "force_update_url": {
+                        "description": "URL to force an update.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Contest": {
+                "description": "A Contest object.",
+                "required": [
+                    "id",
+                    "name",
+                    "slug",
+                    "headline",
+                    "description",
+                    "image",
+                    "url",
+                    "radio_stations",
+                    "start_date",
+                    "end_date",
+                    "background_color",
+                    "locations"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Contest internal WordPress ID.",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Contest name.",
+                        "type": "string"
+                    },
+                    "slug": {
+                        "description": "Contest unique slug, used to identify its url.",
+                        "type": "string"
+                    },
+                    "headline": {
+                        "description": "Contest headline.",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Contest description text.",
+                        "type": "string"
+                    },
+                    "image": {
+                        "description": "The Image object to use in the card.",
+                        "$ref": "#/components/schemas/Image_Sizes"
+                    },
+                    "url": {
+                        "description": "Contest internal url.",
+                        "type": "string"
+                    },
+                    "external_url": {
+                        "description": "Contest external url.",
+                        "type": "string"
+                    },
+                    "background_color": {
+                        "description": "Contest background color.",
+                        "type": "string"
+                    },
+                    "radio_stations": {
+                        "description": "An array of Radio Station objects.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Radio_Station"
+                        }
+                    },
+                    "radio_shows": {
+                        "description": "An array of Radio Show objects.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Radio_Show"
+                        }
+                    },
+                    "start_date": {
+                        "description": "The Start Date and Time string formatted in ISO 8601.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "end_date": {
+                        "description": "The End Date and Time string formatted in ISO 8601.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "locations": {
+                        "description": "An array of Location objects.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Location"
+                        }
+                    },
+                    "contest_type": {
+                        "description": "Contest Type",
+                        "type": "string",
+                        "enum": [
+                            "url",
+                            "radio_station"
+                        ]
+                    }
+                },
+                "type": "object"
+            },
+            "Contests_Block": {
+                "description": "API: /getContest - always use user location in argument",
+                "required": [
+                    "type"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "Block Title.",
+                        "type": "string"
+                    },
+                    "contest_pinned_station_first": {
+                        "description": "Order contests related to pinned station to the front",
+                        "type": "boolean"
+                    },
+                    "filters": {
+                        "properties": {
+                            "genre": {
+                                "description": "Filter Contest down by matching genre",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "items": {
+                        "description": "Array of objects, the type of objects depends on what type of block this instance represents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Contest"
+                        }
+                    },
+                    "type": {
+                        "description": "Block Type.",
+                        "type": "string",
+                        "pattern": "^contests$"
+                    }
+                },
+                "type": "object"
+            },
+            "Genre": {
+                "description": "A Genre object.",
+                "required": [
+                    "id",
+                    "name",
+                    "slug",
+                    "url"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Genre internal WordPress id.",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Genre name.",
+                        "type": "string"
+                    },
+                    "slug": {
+                        "description": "Genre unique slug, used to identify its url.",
+                        "type": "string"
+                    },
+                    "parent_slug": {
+                        "description": "Parent Genre unique slug.",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Genre Description.",
+                        "type": "string"
+                    },
+                    "url": {
+                        "description": "Genre url.",
+                        "type": "string"
+                    },
+                    "background_color": {
+                        "description": "Genre background color.",
+                        "type": "string"
+                    },
+                    "image": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Image_Sizes"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Genre background image."
+                    },
+                    "children": {
+                        "description": "An array of sub Genres.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Genre"
+                        }
+                    },
+                    "remove_from_onboarding": {
+                        "description": "Remove from Onboarding.",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "Genres_Block": {
+                "description": "API: /getGenres",
+                "required": [
+                    "type"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "Block Title.",
+                        "type": "string"
+                    },
+                    "filters": {
+                        "properties": {
+                            "genres": {
+                                "description": "Fetch using each values in the `parent` argument",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "followed": {
+                                "description": "Filter by Followed Genres",
+                                "type": "boolean"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "items": {
+                        "description": "Array of objects, the type of objects depends on what type of block this instance represents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Genre"
+                        }
+                    },
+                    "type": {
+                        "description": "Block Type.",
+                        "type": "string",
+                        "pattern": "^genres$"
+                    }
+                },
+                "type": "object"
+            },
+            "Host": {
+                "description": "A Host object.",
+                "required": [
+                    "id",
+                    "name",
+                    "slug",
+                    "url"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Host internal WordPress id.",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Host name.",
+                        "type": "string"
+                    },
+                    "slug": {
+                        "description": "Host unique slug, used to identify its url.",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Host description.",
+                        "type": "string"
+                    },
+                    "url": {
+                        "description": "Host url.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Image_Sizes": {
+                "description": "An Image object.",
+                "required": [
+                    "full",
+                    "large",
+                    "medium",
+                    "thumbnail"
+                ],
+                "properties": {
+                    "thumbnail": {
+                        "$ref": "#/components/schemas/Image"
+                    },
+                    "medium": {
+                        "$ref": "#/components/schemas/Image"
+                    },
+                    "large": {
+                        "$ref": "#/components/schemas/Image"
+                    },
+                    "full": {
+                        "$ref": "#/components/schemas/Image"
+                    }
+                },
+                "type": "object"
+            },
+            "Image": {
+                "description": "An Image object.",
+                "required": [
+                    "id",
+                    "src"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Image internal WordPress ID.",
+                        "type": "integer"
+                    },
+                    "src": {
+                        "description": "Image source url.",
+                        "type": "string"
+                    },
+                    "caption": {
+                        "description": "Image caption.",
+                        "type": "string"
+                    },
+                    "width": {
+                        "description": "Image width.",
+                        "type": "integer"
+                    },
+                    "height": {
+                        "description": "Image height.",
+                        "type": "integer"
+                    },
+                    "title": {
+                        "description": "Image title, used for the title attribute on web.",
+                        "type": "string"
+                    },
+                    "alt": {
+                        "description": "Image alt text, used for alt attribute on web.",
+                        "type": "string"
+                    },
+                    "srcset": {
+                        "description": "Image source set, used for srcset attribute on web.",
+                        "type": "string"
+                    },
+                    "sizes": {
+                        "description": "Image sizes, used for sizes attribute on web.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Latest_Audio_Highlight_Block": {
+                "description": "API: /getLatestAudioHighlights",
+                "required": [
+                    "type"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "Block Title.",
+                        "type": "string"
+                    },
+                    "filters": {
+                        "properties": {
+                            "genre": {
+                                "description": "Fetch using this value in the `genre` argument",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "items": {
+                        "description": "Array of objects, the type of objects depends on what type of block this instance represents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Audio_Highlight"
+                        }
+                    },
+                    "type": {
+                        "description": "Block Type.",
+                        "type": "string",
+                        "pattern": "^latest_audio_highlight$"
+                    }
+                },
+                "type": "object"
+            },
+            "Live_Radio_Stations_Block": {
+                "description": "API: /getRadioStations | FE hardcoded logic: If pinned station in the list it must be brought to front",
+                "required": [
+                    "type"
+                ],
+                "properties": {
+                    "type": {
+                        "description": "Block type.",
+                        "type": "string",
+                        "pattern": "^live_radio_stations$"
+                    },
+                    "title": {
+                        "description": "Block Title.",
+                        "type": "string"
+                    },
+                    "display_add_prompt": {
+                        "description": "If true, display the last item as the prompt if less than or equal to `display_add_prompt_threshold` ",
+                        "type": "boolean"
+                    },
+                    "display_add_prompt_threshold": {
+                        "description": "Threshold for displaying the \"Add\" prompt. If null treat `display_add_prompt` as disabled",
+                        "type": "integer"
+                    },
+                    "filters": {
+                        "properties": {
+                            "genre": {
+                                "description": "Filter Station down by matching genre",
+                                "type": "string"
+                            },
+                            "follow": {
+                                "description": "If true, filter only followed stations, if false ignore",
+                                "type": "boolean"
+                            },
+                            "priority": {
+                                "description": "If true, filter only priority stations, if false ignore",
+                                "type": "boolean"
+                            },
+                            "pinned": {
+                                "description": "Irrespective if the pinned station is in the list, add it",
+                                "type": "boolean"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "items": {
+                        "description": "Array of objects, the type of objects depends on what type of block this instance represents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Radio_Station"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "Location": {
+                "description": "A Location object.",
+                "required": [
+                    "id",
+                    "name",
+                    "slug",
+                    "url"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Location internal WordPress id.",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Location name.",
+                        "type": "string"
+                    },
+                    "slug": {
+                        "description": "Location unique slug, used to identify its url.",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Location Description.",
+                        "type": "string"
+                    },
+                    "url": {
+                        "description": "Location url.",
+                        "type": "string"
+                    },
+                    "children": {
+                        "description": "An array of child locations.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Location"
+                        }
+                    },
+                    "background_image": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Image_Sizes"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Background image of the location."
+                    },
+                    "background_color": {
+                        "description": "Fallback colour of the image, in the event there is no image.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Menu_Item": {
+                "description": "Menu Item Object.",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Menu item ID.",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Menu item name.",
+                        "type": "string"
+                    },
+                    "url": {
+                        "description": "Menu item uri.",
+                        "type": "string"
+                    },
+                    "app_open_type": {
+                        "description": "Menu item open type in App.",
+                        "type": "string",
+                        "enum": [
+                            "in_app",
+                            "external",
+                            "content"
+                        ]
+                    },
+                    "description": {
+                        "description": "Menu item description.",
+                        "type": "string"
+                    },
+                    "title_attribute": {
+                        "description": "Menu item title attribute.",
+                        "type": "string"
+                    },
+                    "target": {
+                        "description": "Menu item url web target.",
+                        "type": "string"
+                    },
+                    "children": {
+                        "description": "Menu item array of children menu items.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Menu_Item"
+                        }
+                    },
+                    "post": {
+                        "description": "An object to provide necessary values for API call.",
+                        "properties": {
+                            "post_type": {
+                                "description": "The type of post, hinting toward the right api to call.",
+                                "type": "string"
+                            },
+                            "id": {
+                                "description": "The id to use for the API call.",
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "On_Air": {
+                "description": "Schedule Item object.",
+                "required": [
+                    "name",
+                    "image"
+                ],
+                "properties": {
+                    "cta_headline": {
+                        "description": "On Air CTA headline.",
+                        "type": "string"
+                    },
+                    "cta_button_text": {
+                        "description": "On Air CTA button text.",
+                        "type": "string"
+                    },
+                    "cta_option": {
+                        "description": "On_Air call to action option.",
+                        "type": "string"
+                    },
+                    "cta_action": {
+                        "description": "On_Air call to action action.",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "On_Air name.",
+                        "type": "string"
+                    },
+                    "image": {
+                        "description": "On_Air image.",
+                        "type": "string",
+                        "$ref": "#/components/schemas/Image_Sizes"
+                    },
+                    "description": {
+                        "description": "On_Air description.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Page": {
+                "description": "Page object class.",
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Page id.",
+                        "type": "integer"
+                    },
+                    "title": {
+                        "description": "Page title.",
+                        "type": "string"
+                    },
+                    "excerpt": {
+                        "description": "Page excerpt.",
+                        "type": "string"
+                    },
+                    "content": {
+                        "description": "Page content.",
+                        "type": "string"
+                    },
+                    "blocks": {
+                        "description": "An array of Blocks.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Block"
+                        }
+                    },
+                    "url": {
+                        "description": "Page url.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Playlist_Item": {
+                "description": "A Playlist item object.",
+                "minProperties": 1,
+                "properties": {
+                    "podcast_episode": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Podcast_Episode"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Podcast espisode."
+                    },
+                    "audio_highlight": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Audio_Highlight"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Audio highlight."
+                    }
+                },
+                "type": "object"
+            },
+            "Playlist": {
+                "description": "A Playlist object.",
+                "required": [
+                    "id",
+                    "name",
+                    "slug",
+                    "url",
+                    "square_image",
+                    "rect_image",
+                    "primary_color",
+                    "secondary_color",
+                    "total_duration",
+                    "short_description"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Playlist internal WordPress ID.",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Playlist name.",
+                        "type": "string"
+                    },
+                    "slug": {
+                        "description": "Playlist unique slug, used to identify its url.",
+                        "type": "string"
+                    },
+                    "url": {
+                        "description": "Playlist internal url.",
+                        "type": "string"
+                    },
+                    "square_image": {
+                        "description": "The Square Image object.",
+                        "$ref": "#/components/schemas/Image_Sizes"
+                    },
+                    "rect_image": {
+                        "description": "The Square Image object.",
+                        "$ref": "#/components/schemas/Image_Sizes"
+                    },
+                    "primary_color": {
+                        "description": "Playlist primary color.",
+                        "type": "string"
+                    },
+                    "secondary_color": {
+                        "description": "Playlist secondory color.",
+                        "type": "string"
+                    },
+                    "total_duration": {
+                        "description": "Playlist total duration in seconds.",
+                        "type": "integer"
+                    },
+                    "short_description": {
+                        "description": "Playlist short description text.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Podcast_Episode": {
+                "description": "Podcast Episode object class.",
+                "required": [
+                    "id",
+                    "name",
+                    "slug",
+                    "date",
+                    "duration",
+                    "audio_url",
+                    "podcast_id",
+                    "podcast_name"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Podcast Episode internal WordPress ID.",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Podcast Episode name.",
+                        "type": "string"
+                    },
+                    "slug": {
+                        "description": "Podcast Episode slug",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Podcast Episode description",
+                        "type": "string"
+                    },
+                    "url": {
+                        "description": "Podcast Episode url",
+                        "type": "string"
+                    },
+                    "date": {
+                        "description": "Podcast Episode Published Date",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "duration": {
+                        "description": "Podcast Episode duration in seconds.",
+                        "type": "integer"
+                    },
+                    "image": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Image_Sizes"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Podcast Episode Image"
+                    },
+                    "audio_url": {
+                        "description": "Podcast Episode Audio Url",
+                        "type": "string"
+                    },
+                    "episode_number": {
+                        "description": "Podcast Episode Number",
+                        "type": "string"
+                    },
+                    "season_number": {
+                        "description": "Podcast Episode Season Number",
+                        "type": "string"
+                    },
+                    "podcast_id": {
+                        "description": "Associated Podcast ID.",
+                        "type": "integer"
+                    },
+                    "podcast_name": {
+                        "description": "Associated Podcast Name",
+                        "type": "string"
+                    },
+                    "primary_color": {
+                        "description": "Associated Podcast Primary Color",
+                        "type": "string"
+                    },
+                    "secondary_color": {
+                        "description": "Associated Podcast Secondary Color.",
+                        "type": "string"
+                    },
+                    "has_explicit_content": {
+                        "description": "Podcast Episode flag for explicit content",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "Podcast_Episodes_Block": {
+                "description": "API: /getSingleLatestEpisode",
+                "required": [
+                    "type"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "Block Title.",
+                        "type": "string"
+                    },
+                    "filters": {
+                        "properties": {
+                            "podcast_ids": {
+                                "description": "Fetch latest podcast episode for each id",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "favorite": {
+                                "description": "If true, only fetch podcast ids that are followed",
+                                "type": "boolean"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "items": {
+                        "description": "Array of objects, the type of objects depends on what type of block this instance represents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Podcast_Episode"
+                        }
+                    },
+                    "type": {
+                        "description": "Block Type.",
+                        "type": "string",
+                        "pattern": "^podcast_episodes$"
+                    }
+                },
+                "type": "object"
+            },
+            "Podcast": {
+                "description": "A Podcast object.",
+                "required": [
+                    "id",
+                    "name",
+                    "slug",
+                    "url",
+                    "image",
+                    "tagline",
+                    "genres",
+                    "show_type",
+                    "featured_episode",
+                    "network_show_owner",
+                    "copyright",
+                    "is_priority_show",
+                    "primary_show_color",
+                    "cta_for_audio_player"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Podcast internal WordPress id.",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Podcast Name.",
+                        "type": "string"
+                    },
+                    "slug": {
+                        "description": "Podcast unique slug, used to identify its url.",
+                        "type": "string"
+                    },
+                    "url": {
+                        "description": "Podcast url.",
+                        "type": "string"
+                    },
+                    "image": {
+                        "description": "Podcast Artwork Image.",
+                        "$ref": "#/components/schemas/Image_Sizes"
+                    },
+                    "tagline": {
+                        "description": "Podcast Tagline.",
+                        "type": "string"
+                    },
+                    "about": {
+                        "description": "Podcast About.",
+                        "type": "string"
+                    },
+                    "genres": {
+                        "description": "Podcast array of Genres.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Genre"
+                        }
+                    },
+                    "show_type": {
+                        "description": "Podcast Show Type.",
+                        "type": "string"
+                    },
+                    "schedule": {
+                        "description": "Podcast Schedule.",
+                        "type": "string"
+                    },
+                    "featured_episode": {
+                        "description": "Podcast Featured Episode.",
+                        "$ref": "#/components/schemas/Podcast_Episode"
+                    },
+                    "network_show_owner": {
+                        "description": "Podcast Network / Show Owner.",
+                        "type": "string"
+                    },
+                    "hosts": {
+                        "description": "Podcast array of Hosts.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Host"
+                        }
+                    },
+                    "date_created": {
+                        "description": "Podcast Date Started / Date Created.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "website_url": {
+                        "description": "Podcast Website url.",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Podcast Email.",
+                        "type": "string"
+                    },
+                    "phone_number": {
+                        "description": "Podcast Phone Number.",
+                        "type": "string"
+                    },
+                    "copyright": {
+                        "description": "Podcast Copyright.",
+                        "type": "string"
+                    },
+                    "instagram": {
+                        "description": "Podcast Instagram account.",
+                        "type": "string"
+                    },
+                    "facebook": {
+                        "description": "Podcast Facebook account.",
+                        "type": "string"
+                    },
+                    "twitter": {
+                        "description": "Podcast Twitter account.",
+                        "type": "string"
+                    },
+                    "tiktok": {
+                        "description": "Podcast TikTok account.",
+                        "type": "string"
+                    },
+                    "youtube": {
+                        "description": "Podcast Youtube account.",
+                        "type": "string"
+                    },
+                    "auto_follow_podcast": {
+                        "description": "Auto follow podcast or not.",
+                        "type": "boolean"
+                    },
+                    "is_priority_show": {
+                        "description": "Podcast is priority show or not.",
+                        "type": "boolean"
+                    },
+                    "primary_show_color": {
+                        "description": "Podcast primary show color.",
+                        "type": "string"
+                    },
+                    "secondary_show_color": {
+                        "description": "Podcast secondary show color.",
+                        "type": "string"
+                    },
+                    "cta_for_audio_player": {
+                        "description": "Podcast has CTA for audio player.",
+                        "type": "boolean"
+                    },
+                    "cta_headline": {
+                        "description": "Podcast CTA headline.",
+                        "type": "string"
+                    },
+                    "cta_subheading": {
+                        "description": "Podcast CTA subheading.",
+                        "type": "string"
+                    },
+                    "cta_button_text": {
+                        "description": "Podcast secondary show color.",
+                        "type": "string"
+                    },
+                    "cta_button_type": {
+                        "description": "Podcast CTA button type.",
+                        "type": "string"
+                    },
+                    "episode_count": {
+                        "description": "Podcast Episode count.",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Podcasts_Block": {
+                "description": "API: /getPodcasts",
+                "required": [
+                    "type"
+                ],
+                "properties": {
+                    "title": {
+                        "description": "Block Title.",
+                        "type": "string"
+                    },
+                    "display_add_prompt": {
+                        "description": "If true, display the last item as the prompt if less than or equal to `display_add_prompt_threshold`",
+                        "type": "boolean"
+                    },
+                    "display_add_prompt_threshold": {
+                        "description": "Threshold for displaying the \"Add\" prompt. If null treat `display_add_prompt` as disabled",
+                        "type": "integer"
+                    },
+                    "filters": {
+                        "properties": {
+                            "genre": {
+                                "description": "Fetch using this value in the `genre` argument",
+                                "type": "string"
+                            },
+                            "priority": {
+                                "description": "Filter by Priority Podcasts",
+                                "type": "boolean"
+                            },
+                            "recently_played": {
+                                "description": "Filter by recently played (stored on FE)",
+                                "type": "boolean"
+                            },
+                            "followed": {
+                                "description": "Filter by Followed Podcasts",
+                                "type": "boolean"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "items": {
+                        "description": "Array of objects, the type of objects depends on what type of block this instance represents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Podcast"
+                        }
+                    },
+                    "type": {
+                        "description": "Block Type.",
+                        "type": "string",
+                        "pattern": "^podcasts$"
+                    }
+                },
+                "type": "object"
+            },
+            "Post": {
+                "description": "Post object class.",
+                "properties": {
+                    "id": {
+                        "description": "Post id.",
+                        "type": "integer"
+                    },
+                    "title": {
+                        "description": "Post title.",
+                        "type": "string"
+                    },
+                    "excerpt": {
+                        "description": "Post excerpt.",
+                        "type": "string"
+                    },
+                    "content": {
+                        "description": "Post content.",
+                        "type": "string"
+                    },
+                    "url": {
+                        "description": "Post url.",
+                        "type": "string"
+                    },
+                    "date": {
+                        "description": "Post date.",
+                        "type": "string"
+                    },
+                    "date_modified": {
+                        "description": "Post modified date.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Radio_Show": {
+                "description": "Radio Show object class.",
+                "required": [
+                    "id",
+                    "name",
+                    "slug",
+                    "primary_color",
+                    "radio_stations",
+                    "audio_type",
+                    "genres",
+                    "tagline",
+                    "square_image",
+                    "rect_image",
+                    "url"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Radio Show internal id.",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Radio Show name.",
+                        "type": "string"
+                    },
+                    "slug": {
+                        "description": "Radio Show slug",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Radio Show Description.",
+                        "type": "string"
+                    },
+                    "content": {
+                        "description": "Radio Show content.",
+                        "type": "string"
+                    },
+                    "url": {
+                        "description": "Radio Show url.",
+                        "type": "string"
+                    },
+                    "hosts": {
+                        "description": "Radio Show hosts.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Host"
+                        }
+                    },
+                    "tagline": {
+                        "description": "Radio Show tag line.",
+                        "type": "string"
+                    },
+                    "square_image": {
+                        "description": "Radio Show Square Image.",
+                        "$ref": "#/components/schemas/Image_Sizes"
+                    },
+                    "rect_image": {
+                        "description": "Radio Show Rectangular Image.",
+                        "$ref": "#/components/schemas/Image_Sizes"
+                    },
+                    "is_priority": {
+                        "description": "Flags a Priority Radio Show.",
+                        "type": "boolean"
+                    },
+                    "copyright": {
+                        "description": "Radio Show Copyright.",
+                        "type": "string"
+                    },
+                    "primary_color": {
+                        "description": "Radio Show primary background color.",
+                        "type": "string"
+                    },
+                    "secondary_color": {
+                        "description": "Radio Show secondary background color.",
+                        "type": "string"
+                    },
+                    "radio_stations": {
+                        "description": "A Radio Station Object.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Radio_Station"
+                        }
+                    },
+                    "podcast": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Podcast"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "A Podcast Object."
+                    },
+                    "audio_type": {
+                        "description": "A first level Genre object reflecting the audio type.",
+                        "$ref": "#/components/schemas/Genre"
+                    },
+                    "genres": {
+                        "description": "An array of Genre objects.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Genre"
+                        }
+                    },
+                    "instagram": {
+                        "description": "Radio Show Instagram account.",
+                        "type": "string"
+                    },
+                    "facebook": {
+                        "description": "Radio Show Facebook account.",
+                        "type": "string"
+                    },
+                    "twitter": {
+                        "description": "Radio Show Twitter account.",
+                        "type": "string"
+                    },
+                    "tiktok": {
+                        "description": "Radio Show TikTok account.",
+                        "type": "string"
+                    },
+                    "youtube": {
+                        "description": "Radio Show Youtube account.",
+                        "type": "string"
+                    },
+                    "website_url": {
+                        "description": "Radio Show Website URL.",
+                        "type": "string"
+                    },
+                    "phone_number": {
+                        "description": "Radio Show Phone Number.",
+                        "type": "string"
+                    },
+                    "text_number": {
+                        "description": "Radio Show Text Number.",
+                        "type": "string"
+                    },
+                    "creator": {
+                        "description": "Radio Show Creator.",
+                        "type": "string"
+                    },
+                    "date_started": {
+                        "description": "Date the radio show started.",
+                        "type": "string"
+                    },
+                    "language": {
+                        "description": "Radio Show language",
+                        "type": "string"
+                    },
+                    "featured_audio_highlight": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/Audio_Highlight"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Featured Audio Highlight."
+                    }
+                },
+                "type": "object"
+            },
+            "Radio_Shows_Block": {
+                "description": "API: /getRadioShows",
+                "required": [
+                    "type"
+                ],
+                "properties": {
+                    "type": {
+                        "description": "Block type.",
+                        "type": "string",
+                        "pattern": "^radio_shows$"
+                    },
+                    "title": {
+                        "description": "Block Title.",
+                        "type": "string"
+                    },
+                    "display_add_prompt": {
+                        "description": "If true, display the last item as the prompt if less than or equal to `display_add_prompt_threshold` ",
+                        "type": "boolean"
+                    },
+                    "display_add_prompt_threshold": {
+                        "description": "Threshold for displaying the \"Add\" prompt. If null treat `display_add_prompt` as disabled",
+                        "type": "integer"
+                    },
+                    "filters": {
+                        "properties": {
+                            "genre": {
+                                "description": "Fetch using this value in the `genre` argument",
+                                "type": "string"
+                            },
+                            "orderby": {
+                                "description": "Fetch using this value in the `orderby` argument",
+                                "type": "string"
+                            },
+                            "priority": {
+                                "description": "Filter by Priority Shows",
+                                "type": "boolean"
+                            },
+                            "followed": {
+                                "description": "Filter by Followed Radio Shows",
+                                "type": "boolean"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "items": {
+                        "description": "Array of objects, the type of objects depends on what type of block this instance represents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Radio_Show"
+                        }
+                    },
+                    "show_pinned_station_first": {
+                        "description": "If true, order shows for pinned station to the front",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "Radio_Station": {
+                "description": "A Radio Station object.",
+                "required": [
+                    "id",
+                    "name",
+                    "slug",
+                    "ios_stream_url",
+                    "android_stream_url",
+                    "url",
+                    "primary_color",
+                    "secondary_color",
+                    "audio_type",
+                    "genres",
+                    "region",
+                    "city",
+                    "image",
+                    "call_letters",
+                    "frequency",
+                    "am_fm",
+                    "tagline",
+                    "copyright",
+                    "cta_option"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Radio Station internal WordPress ID.",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Radio Station name.",
+                        "type": "string"
+                    },
+                    "tagline": {
+                        "description": "Radio Station tag line.",
+                        "type": "string"
+                    },
+                    "call_letters": {
+                        "description": "Radio Station call letters.",
+                        "type": "string"
+                    },
+                    "frequency": {
+                        "description": "Radio Station frequency.",
+                        "type": "string"
+                    },
+                    "am_fm": {
+                        "description": "Radio Station AM or FM.",
+                        "type": "string",
+                        "enum": [
+                            "AM",
+                            "FM"
+                        ]
+                    },
+                    "address": {
+                        "description": "Radio Station address.",
+                        "type": "string"
+                    },
+                    "longitude": {
+                        "description": "Radio Station longitude.",
+                        "type": "string"
+                    },
+                    "latitude": {
+                        "description": "Radio Station latitude.",
+                        "type": "string"
+                    },
+                    "website_url": {
+                        "description": "Radio Station website URL.",
+                        "type": "string"
+                    },
+                    "shortcode": {
+                        "description": "Radio Station shortcode, for contact through text.",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Radio Station email address.",
+                        "type": "string"
+                    },
+                    "phone_number": {
+                        "description": "Radio Station address.",
+                        "type": "string"
+                    },
+                    "cta_option": {
+                        "description": "Radio Station call to action option.",
+                        "type": "string",
+                        "enum": [
+                            "none",
+                            "call",
+                            "text",
+                            "website",
+                            "email"
+                        ]
+                    },
+                    "instagram": {
+                        "description": "Radio Station Instagram account.",
+                        "type": "string"
+                    },
+                    "facebook": {
+                        "description": "Radio Station Facebook account.",
+                        "type": "string"
+                    },
+                    "twitter": {
+                        "description": "Radio Station Twitter account.",
+                        "type": "string"
+                    },
+                    "tiktok": {
+                        "description": "Radio Station TikTok account.",
+                        "type": "string"
+                    },
+                    "youtube": {
+                        "description": "Radio Station Youtube account.",
+                        "type": "string"
+                    },
+                    "is_rsm_asset": {
+                        "description": "Flags a RSM Radio Station.",
+                        "type": "boolean"
+                    },
+                    "is_priority": {
+                        "description": "Flags a Priority Radio Station.",
+                        "type": "boolean"
+                    },
+                    "copyright": {
+                        "description": "Radio Station Copyright.",
+                        "type": "string"
+                    },
+                    "date_created": {
+                        "description": "Radio Station Creation date.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "slug": {
+                        "description": "Radio Station unique slug, used to identify its url.",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Radio Station description text.",
+                        "type": "string"
+                    },
+                    "content": {
+                        "description": "Radio Station content.",
+                        "type": "string"
+                    },
+                    "ios_stream_url": {
+                        "description": "Radio Station iOS livestream Url.",
+                        "type": "string"
+                    },
+                    "android_stream_url": {
+                        "description": "Radio Station Android livestream Url.",
+                        "type": "string"
+                    },
+                    "web_stream_url": {
+                        "description": "Radio Station Web livestream Url.",
+                        "type": "string"
+                    },
+                    "url": {
+                        "description": "Radio Station url.",
+                        "type": "string"
+                    },
+                    "primary_color": {
+                        "description": "Radio Station primary background color.",
+                        "type": "string"
+                    },
+                    "secondary_color": {
+                        "description": "Radio Station secondary background color.",
+                        "type": "string"
+                    },
+                    "image": {
+                        "description": "The Logo Image Object.",
+                        "$ref": "#/components/schemas/Image_Sizes"
+                    },
+                    "audio_type": {
+                        "description": "A Genre object representing the station type.",
+                        "$ref": "#/components/schemas/Genre"
+                    },
+                    "genres": {
+                        "description": "An array of Genre object.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Genre"
+                        }
+                    },
+                    "region": {
+                        "description": "A Location Object representing the station region.",
+                        "$ref": "#/components/schemas/Location"
+                    },
+                    "city": {
+                        "description": "A Location Object representing the station city.",
+                        "$ref": "#/components/schemas/Location"
+                    },
+                    "media_player_cta_headline": {
+                        "description": "Radio Station media player cta headline.",
+                        "type": "string"
+                    },
+                    "media_player_cta_button_text": {
+                        "description": "Radio Station media player cta button text.",
+                        "type": "string"
+                    },
+                    "language": {
+                        "description": "Language for this Radio Station.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Radio_Stations_Block": {
+                "description": "API: /getRadioStations",
+                "required": [
+                    "type"
+                ],
+                "properties": {
+                    "type": {
+                        "description": "Block type.",
+                        "type": "string",
+                        "pattern": "^radio_stations$"
+                    },
+                    "title": {
+                        "description": "Block Title.",
+                        "type": "string"
+                    },
+                    "filters": {
+                        "properties": {
+                            "local": {
+                                "description": "If true, fetch by user location",
+                                "type": "boolean"
+                            },
+                            "followed": {
+                                "description": "Filter by Followed Radio Stations",
+                                "type": "boolean"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "items": {
+                        "description": "Array of objects, the type of objects depends on what type of block this instance represents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Radio_Station"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "Sample_Station": {
+                "description": "Post object class.",
+                "properties": {
+                    "id": {
+                        "description": "Station id.",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "Station name.",
+                        "type": "string"
+                    },
+                    "android_stream_url": {
+                        "description": "Post excerpt.",
+                        "type": "string"
+                    },
+                    "ios_stream_url": {
+                        "description": "IOS stream url.",
+                        "type": "string"
+                    },
+                    "logo": {
+                        "description": "Logo url.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Schedule_Item": {
+                "description": "Schedule Item object.",
+                "required": [
+                    "start_time",
+                    "end_time",
+                    "type"
+                ],
+                "properties": {
+                    "start_time": {
+                        "description": "Schedule item start time.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "end_time": {
+                        "description": "Schedule item end time.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "type": {
+                        "description": "Schedule Item Type",
+                        "type": "string"
+                    },
+                    "radio_show_id": {
+                        "description": "Schedule Item Radio Show Id",
+                        "type": "integer"
+                    },
+                    "radio_show_name": {
+                        "description": "Schedule Item Radio Show Name",
+                        "type": "string"
+                    },
+                    "segment_text": {
+                        "description": "Schedule Item Segment text.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Single_Playlist_Block": {
+                "description": "Show a single playlist from `playlist` property",
+                "required": [
+                    "type",
+                    "playlist"
+                ],
+                "properties": {
+                    "type": {
+                        "description": "Block type.",
+                        "type": "string",
+                        "pattern": "^single_playlist$"
+                    },
+                    "title": {
+                        "description": "Block Title.",
+                        "type": "string"
+                    },
+                    "playlist": {
+                        "description": "Playlist object.",
+                        "$ref": "#/components/schemas/Playlist"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
