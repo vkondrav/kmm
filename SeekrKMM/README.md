@@ -1,5 +1,9 @@
 This is a Kotlin Multiplatform project targeting Android, iOS, Web.
 
+Calls 2 separate APIs and combines the data into a single UI rendered on all platforms (Android, iOS, Web)
+
+[screenshot](screenshot.png)
+
 * `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
   It contains several subfolders:
   - `commonMain` is for code that’s common for all targets.
@@ -10,12 +14,12 @@ This is a Kotlin Multiplatform project targeting Android, iOS, Web.
 * `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
   you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
 
+Generate the client by running
+1. `content-api-codegen`
+2. `live-api-codegen`
+3. `codegen-fix` (codegen did not play well with ktor)
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
+Open the web application by running the `wasm-js-browser-run` Gradle task.
+Open the Android application by running the `composeApp` Gradle task.
+Open the iOS app by building this project and then opening the Xcode project in the `iosApp` directory.
 
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [GitHub](https://github.com/JetBrains/compose-multiplatform/issues).
-
-You can open the web application by running the `:composeApp:wasmJsBrowserDevelopmentRun` Gradle task.
