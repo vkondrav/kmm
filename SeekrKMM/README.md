@@ -2,7 +2,7 @@ This is a Kotlin Multiplatform project targeting Android, iOS, Web.
 
 Calls 2 separate APIs and combines the data into a single UI rendered on all platforms (Android, iOS, Web)
 
-[screenshot](screenshot.png)
+![screenshot](screenshot.png)
 
 * `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
   It contains several subfolders:
